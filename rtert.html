@@ -3,116 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
 
 <style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
 body{
-    margin:0;
-    height:100vh;
+  font-family:Arial, sans-serif;
+  background: radial-gradient(circle, #1a1a1a, #000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* CARD */
+.container{
+  width:100%;
+  max-width:360px;
+  background:#111;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 0 25px rgba(255,0,85,0.3);
+  text-align:center;
+}
+
+/* TITLE */
+.title{
+  color:#fff;
+  font-size:20px;
+  margin-bottom:15px;
+}
+
+/* BUTTON BASE */
+.elite-btn{
+    position:relative;
+    width:100%;
+    height:68px;
+
     display:flex;
     justify-content:center;
     align-items:center;
-    background:
-        radial-gradient(circle at top,#2a2a2a,#0b0b0b 60%);
-    font-family:'Segoe UI',sans-serif;
-}
 
-.premium-btn{
-    position:relative;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    padding:18px 50px;
+    margin:15px 0;
+
     text-decoration:none;
+    overflow:hidden;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0a0a0a,
+        #1b1b1b,
+        #0a0a0a
+    );
+
+    border:1px solid rgba(255,215,0,.3);
+
+    color:#ffffff;
     font-size:18px;
     font-weight:700;
-    letter-spacing:1px;
-    color:#f8e7a1;
-
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(12px);
-
-    border:1px solid rgba(255,215,0,.25);
-    border-radius:60px;
+    letter-spacing:1.5px;
 
     box-shadow:
-        0 0 0 1px rgba(255,215,0,.1),
         0 10px 30px rgba(0,0,0,.6),
-        inset 0 1px 1px rgba(255,255,255,.1);
+        0 0 20px rgba(255,215,0,.12);
 
-    overflow:hidden;
     transition:.4s ease;
 }
 
-.premium-btn::before{
+.elite-btn::before{
     content:"";
     position:absolute;
-    top:0;
-    left:-150%;
-    width:70%;
-    height:100%;
+    inset:-2px;
 
-    background:linear-gradient(
+    background:
+    linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,.3),
+        #ffd700,
+        #fff,
+        #ffd700,
         transparent
     );
 
-    transform:skewX(-25deg);
+    background-size:300% 100%;
+
+    border-radius:20px;
+
+    animation:borderFlow 4s linear infinite;
+
+    z-index:0;
 }
 
-.premium-btn:hover::before{
-    left:180%;
-    transition:1s;
+.elite-btn::after{
+    content:"";
+    position:absolute;
+    inset:2px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #1a1a1a,
+        #090909
+    );
+
+    border-radius:16px;
+
+    z-index:1;
 }
 
-.premium-btn:hover{
+.elite-btn span{
+    position:relative;
+    z-index:2;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,.15);
+}
+
+.elite-btn span::before{
+    content:"";
+    position:absolute;
+    top:-25px;
+    left:-120px;
+
+    width:40px;
+    height:120px;
+
+    background:rgba(255,255,255,.4);
+
+    transform:rotate(25deg);
+
+    filter:blur(8px);
+
+    animation:shine 3s infinite;
+}
+
+.elite-btn:hover{
     transform:translateY(-4px);
-    border-color:#ffd700;
 
     box-shadow:
-        0 0 25px rgba(255,215,0,.2),
         0 15px 40px rgba(0,0,0,.8),
-        inset 0 1px 1px rgba(255,255,255,.2);
+        0 0 35px rgba(255,215,0,.25);
 }
 
-.premium-btn:active{
-    transform:scale(.98);
+@keyframes borderFlow{
+    0%{
+        background-position:0% 50%;
+    }
+    100%{
+        background-position:300% 50%;
+    }
 }
 
-.play-icon{
-    font-size:20px;
-    color:#ffd700;
+@keyframes shine{
+    0%{
+        left:-120px;
+    }
+    100%{
+        left:350px;
+    }
 }
 
-.gold-line{
-    position:absolute;
-    inset:0;
-    border-radius:60px;
-    padding:1px;
-    background:linear-gradient(
-        135deg,
-        #fff5c3,
-        #ffd700,
-        #a97800,
-        #fff5c3
-    );
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite:xor;
-    mask-composite:exclude;
-}
 </style>
 </head>
+
 <body>
 
-<a href="#" class="premium-btn">
-    <div class="gold-line"></div>
-    <span class="play-icon">▶</span>
-    WATCH NOW
+<div class="container">
+
+<div class="title">🔥 VIDEO VIRAL  🔥</div>
+
+<a href="#" id="btn1" class="elite-btn" target="_blank">
+    <span>▶ PLAY VIDEO</span>
 </a>
+
+<a href="#" id="btn2" class="elite-btn" target="_blank">
+    <span>▶ ALTERNATIVE LINK</span>
+</a>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const dynamicId = params.get('video') || 'DEFAULT123';
+
+document.getElementById('btn1').href =
+  `https://t.co/Ny5Tr1DeXI`;
+
+document.getElementById('btn2').href =
+  `https://cdn2.videy.co/${dynamicId}.mp4`;
+</script>
+
+   <!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,4924932,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4924932&101" alt="" border="0"></a></noscript>
+<!-- Histats.com  END  -->
+
+</script>
+
+</div>
 
 </body>
 </html>
